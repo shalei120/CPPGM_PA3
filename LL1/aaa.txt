@@ -1,0 +1,65 @@
+primary-expression:
+    integral-literal     
+    OP_LPAREN controlling-expression OP_RPAREN
+    defined identifier_or_keyword                
+    defined OP_LPAREN identifier_or_keyword OP_RPAREN      
+    identifier_or_keyword       
+
+unary-expression:
+    primary-expression
+    OP_PLUS unary-expression
+    OP_MINUS unary-expression
+    OP_LNOT unary-expression
+    OP_COMPL unary-expression
+
+multiplicative-expression:
+    unary-expression
+    multiplicative-expression OP_STAR unary-expression
+    multiplicative-expression OP_DIV unary-expression
+    multiplicative-expression OP_MOD unary-expression
+
+additive-expression:
+    multiplicative-expression
+    additive-expression OP_PLUS multiplicative-expression
+    additive-expression OP_MINUS multiplicative-expression
+
+shift-expression:
+    additive-expression
+    shift-expression OP_LSHIFT additive-expression
+    shift-expression OP_RSHIFT additive-expression
+
+relational-expression:
+    shift-expression
+    relational-expression OP_LT shift-expression
+    relational-expression OP_GT shift-expression
+    relational-expression OP_LE shift-expression
+    relational-expression OP_GE shift-expression
+
+equality-expression:
+    relational-expression
+    equality-expression OP_EQ relational-expression
+    equality-expression OP_NE relational-expression
+
+and-expression:
+    equality-expression
+    and-expression OP_AMP equality-expression
+
+exclusive-or-expression:
+    and-expression
+    exclusive-or-expression OP_XOR and-expression
+
+inclusive-or-expression:
+    exclusive-or-expression
+    inclusive-or-expression OP_BOR exclusive-or-expression
+
+logical-and-expression:
+    inclusive-or-expression
+    logical-and-expression OP_LAND inclusive-or-expression
+
+logical-or-expression:
+    logical-and-expression
+    logical-or-expression OP_LOR logical-and-expression
+
+controlling-expression:
+    logical-or-expression
+    logical-or-expression OP_QMARK controlling-expression OP_COLON controlling-expression
